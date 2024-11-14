@@ -1,20 +1,20 @@
-turtles-own [behavior]
+breed [investors investor]
+investors-own [behavior perceived_price]
+
 to setup
   clear-all
-  create-turtles 500  
-  [
+  create-investors 1000  [
     setxy random-xcor random-ycor 
-    set behavior 1
+    ask n-of 500 investors [
+    set behavior 1]
+    ask investors with [behavior = "unassigned"] [
+    set behavior 0]
     if behavior = 1 [ ;; 1 is optimist
-      set color blue
-    ]
-  ]
-  create-turtles 500  
-  [
-    setxy random-xcor random-ycor 
-    set behavior 0
-    if behavior = 0 [ ;; 0 is pessimist
-      set color red
-    ]
+      set color blue]
+    if behavior = 0 [
+      set color red]
+    set perceived_price random-normal 15 3
+    while [perceived_price <= 0] [
+      set perceived_price random-normal 15 3 ]
   ]
 end
