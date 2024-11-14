@@ -1,0 +1,20 @@
+turtles-own [behavior]
+to setup
+  clear-all
+  create-turtles 500  
+  [
+    setxy random-xcor random-ycor 
+    set behavior 1
+    if behavior = 1 [ ;; 1 is optimist
+      set color blue
+    ]
+  ]
+  create-turtles 500  
+  [
+    setxy random-xcor random-ycor 
+    set behavior 0
+    if behavior = 0 [ ;; 0 is pessimist
+      set color red
+    ]
+  ]
+end
