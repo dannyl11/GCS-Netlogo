@@ -1,20 +1,25 @@
 breed [investors investor]
-investors-own [behavior perceived_price]
+investors-own [personality perceived_price]
 
 to setup
   clear-all
-  create-investors 1000  [
+  create-investors 1000 [
     setxy random-xcor random-ycor 
-    ask n-of 500 investors [
-    set behavior 1]
-    ask investors with [behavior = "unassigned"] [
-    set behavior 0]
-    if behavior = 1 [ ;; 1 is optimist
-      set color blue]
-    if behavior = 0 [
-      set color red]
-    set perceived_price random-normal 15 3
-    while [perceived_price <= 0] [
-      set perceived_price random-normal 15 3 ]
-  ]
+    set personality "unassigned" ;; Initialize personality
+    set perceived_price random-normal 15 3]
+  
+  ask n-of 500 investors [
+    set personality "optimistic"
+    set color blue]
+  ask investors with [personality = "unassigned"] [
+    set personality "pessimistic"
+    set color red]
+  
+  reset-ticks
+end
+
+
+to update-histogram ;; update histogram of perceived price to see distribution as model runs
+  set-current-plot "Perceived Price"
+  histogram [perceived_price] of investors
 end
